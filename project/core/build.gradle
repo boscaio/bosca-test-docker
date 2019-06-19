@@ -1,0 +1,25 @@
+dependencies {
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutine_version")
+
+    compile "org.postgresql:postgresql:$postgresql_version"
+
+    compile "org.jdbi:jdbi3-core:$jdbi_version"
+    compile "org.jdbi:jdbi3-sqlobject:$jdbi_version"
+    compile "org.jdbi:jdbi3-kotlin:$jdbi_version"
+    compile "org.jdbi:jdbi3-kotlin-sqlobject:$jdbi_version"
+    compile "org.jdbi:jdbi3-postgres:$jdbi_version"
+
+    compile "com.squareup.okhttp3:okhttp:$okhttp_version"
+
+    compile "org.ehcache:ehcache:$ehcache_version"
+    compile "org.quartz-scheduler:quartz:$quartz_version"
+
+    compile "commons-validator:commons-validator:$commons_validator_version"
+
+    compile "jakarta.ws.rs:jakarta.ws.rs-api:$ws_rs_api_version"
+    compile "jakarta.xml.ws:jakarta.xml.ws-api:$xml_ws_api_version"
+    compile "jakarta.xml.soap:jakarta.xml.soap-api:$xml_soap_api_version"
+    compile "jakarta.xml.bind:jakarta.xml.bind-api:$xml_bind_api_version"
+    compile "jakarta.mail:jakarta.mail-api:$mail_api_version"
+}

@@ -1,0 +1,88 @@
+buildscript {
+    repositories {
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+    }
+}
+
+allprojects {
+    group = "bosca"
+    version = "0.0.1"
+
+    apply plugin: "org.jetbrains.kotlin.jvm"
+    apply plugin: "kotlinx-serialization"
+    apply plugin: "jacoco"
+
+    repositories {
+        mavenLocal()
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
+        maven { url "https://kotlin.bintray.com/ktor" }
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+        mavenCentral()
+    }
+
+    dependencies {
+        compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+        compile("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
+        compile("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlin_serialization_version")
+        compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutine_version")
+
+        compile("ch.qos.logback:logback-classic:$logback_version")
+
+        testCompile("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
+        testCompile("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    }
+
+    kotlin {
+        sourceSets {
+            main {
+                kotlin.srcDirs("src")
+            }
+            test {
+                kotlin.srcDirs("test")
+            }
+        }
+    }
+
+    sourceSets {
+        main {
+            resources.srcDirs("resources")
+        }
+        test {
+            resources.srcDirs("testresources")
+        }
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    jacoco {
+        toolVersion = "0.8.3"
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+
+    ext.moduleName = "bosca.${project.name}"
+
+    compileJava {
+        inputs.property("moduleName", moduleName)
+        doFirst {
+            options.compilerArgs = [
+                    "--module-path", classpath.asPath,
+                    "--add-modules", "java.xml.bind"
+            ]
+            classpath = files()
+        }
+    }
+}
